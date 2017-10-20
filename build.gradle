@@ -1,0 +1,22 @@
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+repositories {
+    jcenter()
+}
+
+mainClassName="CnnSentenceClassification"
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2"
+	
+	compile group: 'org.deeplearning4j', name: 'deeplearning4j-core', version: '0.9.1'
+	compile group: 'org.deeplearning4j', name: 'deeplearning4j-nlp', version: '0.9.1'	    
+	testCompile group: 'org.nd4j', name: 'nd4j-native-platform', version: '0.9.1'
+
+    
+    compile "org.slf4j:slf4j-simple:1.7.25"
+    compile "org.slf4j:slf4j-api:1.7.25"
+}
+
