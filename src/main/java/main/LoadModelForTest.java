@@ -1,3 +1,4 @@
+package main;
 
 
 import java.io.BufferedReader;
@@ -23,16 +24,16 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 
 public class LoadModelForTest {
 
-	public static final String DATA_PATH = "/home/fbm/Desktop/CNN_sentence-master/paper_code/working verson/";
+	public static final String DATA_PATH = "/home/fbm/eclipse-workspace/General Data/RoleTaggerGroundTruth-master/Roles/test/test30/";
 
 	/** Location (local file system) for the Google News vectors. Set this manually. */
 	//public static final String WORD_VECTORS_PATH = "/home/fbm/Desktop/CNN_sentence-master/paper_code/GoogleNews-vectors-negative300.bin.gz";
-	public static final String WORD_VECTORS_PATH = "/home/fbm/Desktop/CNN_sentence-master/paper_code/GoogleNews-vectors-negative300.bin.gz";
+	public static final String WORD_VECTORS_PATH = "/home/fbm/eclipse-workspace/General Data/Google Word2Vec/GoogleNews-vectors-negative300.bin.gz";	
 
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		File locationToSave = new File("MyMultiLayerNetworkFull2.zip"); 
+		File locationToSave = new File("2class.zip"); 
 		System.out.println("model loaded");
 		try {
 
@@ -40,6 +41,7 @@ public class LoadModelForTest {
 			int truncateReviewsToLength = 243;
 			Random rng = new Random(12345);
 			System.out.println("loading word2vec");
+			//WordVectors wordVectors = null;
 			WordVectors wordVectors = WordVectorSerializer.loadStaticModel(new File(WORD_VECTORS_PATH));
 			DataSetIterator testIter = getDataSetIterator(false, wordVectors, batchSize, truncateReviewsToLength, rng);
 
@@ -47,9 +49,9 @@ public class LoadModelForTest {
 			int pos=0;
 			int neg = 0;
 
-			String directory = "negative";
+			String directory = DATA_PATH+"/negative";
 			File[] listOfFiles = new File(directory).listFiles();
-//
+
 			double tp = 0;
 			double tn = 0;
 			double fp = 0;
@@ -74,8 +76,7 @@ public class LoadModelForTest {
 			}
 			
 			System.out.println("precision negative="+(tn/(tn+fp)));
-			directory = "positive";
-			listOfFiles = new File(directory).listFiles();
+			
 			
 			for (int i = 0; i < listOfFiles.length; i++) {
 				final String fileName = listOfFiles[i].getName();
@@ -119,9 +120,11 @@ public class LoadModelForTest {
 //			System.out.println("Positive = "+(100*pos)/(pos+neg)+"%");
 //			System.out.println("Negative ="+(100*neg)/(pos+neg)+"%");
 //			
-//			directory = "positive";
+//			directory = DATA_PATH+"/positive";
 //			listOfFiles = new File(directory).listFiles();
-//
+////			directory = "positive";
+////			listOfFiles = new File(directory).listFiles();
+////
 //			for (int i = 0; i < listOfFiles.length; i++) {
 //				final String fileName = listOfFiles[i].getName();
 //				String entityName;
@@ -147,7 +150,7 @@ public class LoadModelForTest {
 
 	private static DataSetIterator getDataSetIterator(boolean isTraining, WordVectors wordVectors, int minibatchSize,
 			int maxSentenceLength, Random rng ){
-		String path = FilenameUtils.concat(DATA_PATH, (isTraining ? "train/" : "test/"));
+		String path = FilenameUtils.concat(DATA_PATH, (isTraining ? "" : ""));
 		String positiveBaseDir = FilenameUtils.concat(path, "positive");
 		String negativeBaseDir = FilenameUtils.concat(path, "negative");
 

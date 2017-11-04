@@ -1,5 +1,4 @@
-
-
+package main;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,10 +46,11 @@ public class CnnSentenceClassification {
     /** Data URL for downloading */
     public static final String DATA_URL = "http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz";
     /** Location to save and extract the training/testing data */
-    public static final String DATA_PATH = ".";
+    public static final String DATA_PATH = "/home/farshad/data";
 
     /** Location (local file system) for the Google News vectors. Set this manually. */
-    public static final String WORD_VECTORS_PATH = "/home/fbm/eclipse-workspace/General Data/Google Word2Vec/GoogleNews-vectors-negative300.bin.gz";
+    //public static final String WORD_VECTORS_PATH = "/home/fbm/eclipse-workspace/General Data/Google Word2Vec/GoogleNews-vectors-negative300.bin.gz";
+    public static final String WORD_VECTORS_PATH = "/home/farshad/GoogleNews-vectors-negative300.bin";
 
     public static void main(String[] args) throws Exception {
         if(WORD_VECTORS_PATH.startsWith("/PATH/TO/YOUR/VECTORS/")){
@@ -63,7 +63,7 @@ public class CnnSentenceClassification {
         //Basic configuration
         int batchSize = 50;
         int vectorSize = 300;               //Size of the word vectors. 300 in the Google News model
-        int nEpochs = 2;                    //Number of epochs (full passes of training data) to train on
+        int nEpochs = 5;                    //Number of epochs (full passes of training data) to train on
         int truncateReviewsToLength = 301;  //Truncate reviews with length (# words) greater than this
 
         int cnnLayerFeatureMaps = 100;      //Number of feature maps / channels / depth for each CNN layer
@@ -151,7 +151,7 @@ public class CnnSentenceClassification {
         
         
         //Save the model
-        File locationToSave = new File("MyMultiLayerNetworkFull2.zip");      //Where to save the network. Note: the file is in .zip format - can be opened externally
+        File locationToSave = new File("2class.zip");      //Where to save the network. Note: the file is in .zip format - can be opened externally
         boolean saveUpdater = true;                                             //Updater: i.e., the state for Momentum, RMSProp, Adagrad etc. Save this if you want to train your network more in the future
         ModelSerializer.writeModel(net, locationToSave, saveUpdater);
         
